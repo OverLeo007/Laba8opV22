@@ -5,12 +5,21 @@ from PyQt5 import QtCore, QtWidgets, Qt
 
 from ordering import Dish, Order
 from gui.delivery_gui import Ui_deliveryTerminal
+from gui.about import Ui_About
+
+
+class AboutWindow(QWidget, Ui_About):
+    def __init__(self):
+        super(AboutWindow, self).__init__()
+        self.setupUi(self)
 
 
 class Terminal(QWidget, Ui_deliveryTerminal):
     def __init__(self):
         super(Terminal, self).__init__()
         self.setupUi(self)
+
+        self.aboutWindow = AboutWindow()
 
         self.order = Order()
         self.menu = []
@@ -66,7 +75,12 @@ class Terminal(QWidget, Ui_deliveryTerminal):
         self.getOrderButton.clicked.connect(self.get_order)
         self.doNewOrderButton.clicked.connect(self.reset)
         self.exitButton.clicked.connect(exit)
+        self.aboutButton.clicked.connect(self.show_about)
+
         self.timer.timeout.connect(self.recurring_timer)
+
+    def show_about(self):
+        self.aboutWindow.show()
 
     def reset(self):
         self.making_dishes_queue = []
@@ -169,6 +183,7 @@ class Terminal(QWidget, Ui_deliveryTerminal):
                 dish.hide()
                 dish.counter.hide()
 
+            self.aboutButton.hide()
             self.orderCostLabel.hide()
             self.makeOrderButton.hide()
             self.orderTextBrowser.setText(self.order.__str__())
@@ -182,6 +197,7 @@ class Terminal(QWidget, Ui_deliveryTerminal):
             dish.counter.show()
         self.orderCostLabel.show()
         self.makeOrderButton.show()
+        self.aboutButton.show()
 
         self.orderTextBrowser.hide()
         self.backToPickButton.hide()
