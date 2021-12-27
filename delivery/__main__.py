@@ -1,7 +1,7 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication
-from terminal import Terminal
+from delivery.terminal import Terminal
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

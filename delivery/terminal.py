@@ -3,9 +3,9 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5 import QtCore, QtWidgets, Qt
 
-from ordering import Dish, Order
-from gui.delivery_gui import Ui_deliveryTerminal
-from gui.about import Ui_About
+from delivery.ordering import Dish, Order
+from delivery.gui.delivery_gui import Ui_deliveryTerminal
+from delivery.gui.about import Ui_About
 
 
 class AboutWindow(QWidget, Ui_About):
@@ -33,7 +33,7 @@ class Terminal(QWidget, Ui_deliveryTerminal):
         self.making_dishes_queue = []
         self.made_dishes = []
         self.timer = Qt.QTimer()
-        self.timer_interval = 500
+        self.timer_interval = 100
         self.timer.setInterval(self.timer_interval)
         with open('dishes.txt', 'r', encoding='utf-8') as dishes_file:
             for dish in dishes_file.readlines():
@@ -154,7 +154,7 @@ class Terminal(QWidget, Ui_deliveryTerminal):
         """
         if self.making_dishes_queue:
             progress_bar = self.making_dishes_queue[0]['progressBar']
-            progress_bar.setValue(progress_bar.value() + int(50 * (self.timer_interval / 1000)))
+            progress_bar.setValue(progress_bar.value() + int(20 * (self.timer_interval / 1000)))
             status = self.making_dishes_queue[0]['status']
             if progress_bar.value() <= 60:
                 status.setText('Готовим')
