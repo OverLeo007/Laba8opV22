@@ -13,12 +13,51 @@
   <property name="windowTitle">
    <string>IKIT Delivery</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QGridLayout" name="dishesLayout"/>
    </item>
    <item>
+    <layout class="QVBoxLayout" name="doOredrLayout"/>
+   </item>
+   <item>
     <widget class="QTextBrowser" name="orderTextBrowser"/>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="doNewOrderLabel">
+       <property name="text">
+        <string>Заказ успешно выдан, хотите оформить еще один заказ?</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QPushButton" name="doNewOrderButton">
+         <property name="text">
+          <string>Да!</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="exitButton">
+         <property name="text">
+          <string>Нет</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="getOrderButton">
+     <property name="text">
+      <string>Забрать заказ</string>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
