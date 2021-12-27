@@ -9,12 +9,18 @@ from gui.about import Ui_About
 
 
 class AboutWindow(QWidget, Ui_About):
+    """
+    Класс окна, отображающего информацию о программе
+    """
     def __init__(self):
         super(AboutWindow, self).__init__()
         self.setupUi(self)
 
 
 class Terminal(QWidget, Ui_deliveryTerminal):
+    """
+    Класс терминала, создающий окно для взаимодействия с пользователем
+    """
     def __init__(self):
         super(Terminal, self).__init__()
         self.setupUi(self)
@@ -37,7 +43,9 @@ class Terminal(QWidget, Ui_deliveryTerminal):
         self.addUi()
 
     def addUi(self):
-
+        """
+        Создание и добавление некоторых виджетов в окно
+        """
         for n, i in enumerate(self.menu):
             layout_dish = QtWidgets.QHBoxLayout()
 
@@ -80,9 +88,15 @@ class Terminal(QWidget, Ui_deliveryTerminal):
         self.timer.timeout.connect(self.recurring_timer)
 
     def show_about(self):
+        """
+        Метод, показывающий окно о программе
+        """
         self.aboutWindow.show()
 
     def reset(self):
+        """
+        Метод, сбрасывающий интерфейс до исходного состояния
+        """
         self.making_dishes_queue = []
         self.made_dishes = []
 
@@ -105,6 +119,9 @@ class Terminal(QWidget, Ui_deliveryTerminal):
         self.cost_upd()
 
     def generate_order_ui(self):
+        """
+        Метод, перестраивающий окно для показа информации о процессе приготовления заказа
+        """
         self.orderTextBrowser.hide()
         self.backToPickButton.hide()
         self.doOrderButton.hide()
@@ -131,6 +148,10 @@ class Terminal(QWidget, Ui_deliveryTerminal):
         self.timer.start()
 
     def recurring_timer(self):
+        """
+        Метод, отвечающий за приготовление каждого
+        блюда в заказе, вызывается экземпляром Qt.QTimer
+        """
         if self.making_dishes_queue:
             progress_bar = self.making_dishes_queue[0]['progressBar']
             progress_bar.setValue(progress_bar.value() + int(50 * (self.timer_interval / 1000)))
@@ -148,6 +169,12 @@ class Terminal(QWidget, Ui_deliveryTerminal):
             self.getOrderButton.setEnabled(True)
 
     def get_order(self):
+        """
+        Метод, вызываемый при нажатии
+        кнопки получаения заказа,
+        открывает доступ к созданию
+        нового заказа или выходу из программы
+        """
         for dish in self.made_dishes:
             for widget in dish.values():
                 widget.hide()
@@ -157,6 +184,10 @@ class Terminal(QWidget, Ui_deliveryTerminal):
         self.exitButton.show()
 
     def add_to_order(self, state):
+        """
+        Метод, вызываемый при добавления блюда в заказ,
+        обновляет стоимость и добавляет блюдо или удаляет блюдо из заказа
+        """
         dish = self.sender()
         if state == QtCore.Qt.Checked:
             dish.counter.setEnabled(True)
@@ -170,6 +201,11 @@ class Terminal(QWidget, Ui_deliveryTerminal):
         self.cost_upd()
 
     def counter_value_changed(self, value):
+        """
+        Метод, вызываемый при изменении
+        количества блюд одного типа,
+        добавляет или удаляет блюдо из заказа
+        """
         counter = self.sender()
         if value > self.order.dishes.count(counter.dish_to_count.dish_name):
             self.order.add_dish(counter.dish_to_count.dish_name)
@@ -178,6 +214,11 @@ class Terminal(QWidget, Ui_deliveryTerminal):
         self.cost_upd()
 
     def do_order(self):
+        """
+        Метод, выводящий на экран краткую
+        информацию о заказе
+        (название блюда, кол-во, общую стоимость)
+        """
         if self.order.cost > 0:
             for dish in self.menu_gui:
                 dish.hide()
@@ -192,6 +233,11 @@ class Terminal(QWidget, Ui_deliveryTerminal):
             self.doOrderButton.show()
 
     def back_to_pick(self):
+        """
+        Метод, позволяющий вернуться
+        из меню подтверждения заказа,
+         обратно к выбору блюд
+        """
         for dish in self.menu_gui:
             dish.show()
             dish.counter.show()
@@ -204,9 +250,18 @@ class Terminal(QWidget, Ui_deliveryTerminal):
         self.doOrderButton.hide()
 
     def cost_upd(self):
+        """
+        Метод, обновляющий отображение
+        цены заказа, вызывается
+        при добавлении или удалении блюд
+        """
         self.orderCostLabel.setText(f'Стоимость: {self.order.cost}')
 
     def get_menu(self):
+        """
+        Метод, представляющий
+        информацию о блюдах в виде списка
+        """
         res = []
         for i in self.menu:
             res.append(i.dish_inf())

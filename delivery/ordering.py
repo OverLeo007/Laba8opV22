@@ -1,17 +1,34 @@
 class Order:
+    """
+    Класс заказа, содержит информацию
+    о блюдах и их общей цене
+    """
     def __init__(self):
         self.dishes = []
         self.cost = 0
 
     def add_dish(self, dish):
+        """
+        Метод добавления блюда в заказ,
+        также обновляет его стоимость
+        """
         self.dishes.append(dish)
         self.cost += dish.cost
 
     def remove_dish(self, dish):
+        """
+        Метод удаления блюда из заказа,
+        также обновляет его стоимость
+        """
         self.dishes.remove(dish)
         self.cost -= dish.cost
 
     def get_uniq_dishes(self):
+        """
+        Метод, возвращающий словарь
+        ключами которого являются названия блюд,
+        а значениями объект блюда и его количество в заказе
+        """
         return {dish.name: (dish, self.dishes.count(dish)) for dish in set(self.dishes)}
 
     def __str__(self):
@@ -38,5 +55,8 @@ class Dish:
         return f'{self.name}, стоимость: {self.cost}руб, вес: {self.weight}г'
 
     def dish_inf(self):
+        """
+        Метод получения информации о блюде в виде словаря
+        """
         return {'name': self.name, 'cost': self.cost,
                 'weight': self.weight}
