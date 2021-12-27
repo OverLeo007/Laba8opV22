@@ -5,7 +5,7 @@ from delivery.terminal import Terminal
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = Terminal()
+    ex = Terminal('dishes.txt')
     ex.show()
     app.exec_()
     exit()

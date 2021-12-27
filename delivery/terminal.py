@@ -21,7 +21,7 @@ class Terminal(QWidget, Ui_deliveryTerminal):
     """
     Класс терминала, создающий окно для взаимодействия с пользователем
     """
-    def __init__(self):
+    def __init__(self, dish_file):
         super(Terminal, self).__init__()
         self.setupUi(self)
 
@@ -35,7 +35,7 @@ class Terminal(QWidget, Ui_deliveryTerminal):
         self.timer = Qt.QTimer()
         self.timer_interval = 100
         self.timer.setInterval(self.timer_interval)
-        with open('dishes.txt', 'r', encoding='utf-8') as dishes_file:
+        with open(dish_file, 'r', encoding='utf-8') as dishes_file:
             for dish in dishes_file.readlines():
                 dish_name, dish_cost, dish_weight = dish.replace('\n', '').split(' - ')
                 self.menu.append(Dish(dish_name, int(dish_weight), int(dish_cost)))
