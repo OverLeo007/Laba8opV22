@@ -208,9 +208,11 @@ class Terminal(QWidget, Ui_deliveryTerminal):
         """
         counter = self.sender()
         if value > self.order.dishes.count(counter.dish_to_count.dish_name):
-            self.order.add_dish(counter.dish_to_count.dish_name)
+            for _ in range(value - self.order.dishes.count(counter.dish_to_count.dish_name)):
+                self.order.add_dish(counter.dish_to_count.dish_name)
         else:
-            self.order.remove_dish(counter.dish_to_count.dish_name)
+            for _ in range(self.order.dishes.count(counter.dish_to_count.dish_name) - value):
+                self.order.remove_dish(counter.dish_to_count.dish_name)
         self.cost_upd()
 
     def do_order(self):
@@ -270,7 +272,7 @@ class Terminal(QWidget, Ui_deliveryTerminal):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = Terminal()
+    ex = Terminal('dishes.txt')
     ex.show()
     app.exec_()
     exit()
